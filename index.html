@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0B1020" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F5F7FC" media="(prefers-color-scheme: light)" />
+
+    <title>%EA_TITLE%</title>
+    <meta name="description" content="%EA_DESCRIPTION%" />
+    <meta name="author" content="Emmanuel Acquah" />
+
+    <!-- Everything below is substituted at build time from `profile.seo`
+         in src/data/profile.ts — change the domain there, once. -->
+    <link rel="canonical" href="%EA_URL%" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Emmanuel Acquah" />
+    <meta property="og:title" content="%EA_TITLE%" />
+    <meta property="og:description" content="%EA_SOCIAL_DESCRIPTION%" />
+    <meta property="og:url" content="%EA_URL%" />
+    <meta property="og:image" content="%EA_OG_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Emmanuel Acquah — Building Software. Exploring AI. Advancing Through Research." />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%EA_TITLE%" />
+    <meta name="twitter:description" content="%EA_SOCIAL_DESCRIPTION%" />
+    <meta name="twitter:image" content="%EA_OG_IMAGE%" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+
+    <!-- Structured data. Every field here is factual; nothing is added that
+         cannot be evidenced. Update sameAs with real profile URLs. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Emmanuel Acquah",
+        "jobTitle": "Software Developer",
+        "url": "%EA_URL%",
+        "address": { "@type": "PostalAddress", "addressCountry": "GH" },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Koforidua Technical University",
+          "address": { "@type": "PostalAddress", "addressCountry": "GH" }
+        },
+        "knowsAbout": [
+          "Software Development",
+          "Web Development",
+          "Mobile Application Development",
+          "React",
+          "React Native",
+          "TypeScript",
+          "Databases",
+          "Database Administration",
+          "Machine Learning",
+          "Cybersecurity"
+        ],
+        "sameAs": []
+      }
+    </script>
+
+    <script>
+      // Apply the stored theme before first paint so there is no flash of the
+      // wrong background. Dark is the default when nothing is stored.
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('ea-theme')
+          var theme = stored === 'light' ? 'light' : 'dark'
+          document.documentElement.classList.remove('dark', 'light')
+          document.documentElement.classList.add(theme)
+        } catch (e) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width:40rem;margin:4rem auto;padding:0 1.5rem;font-family:system-ui,sans-serif;color:#F8FAFC">
+        <h1 style="font-size:1.6rem">Emmanuel Acquah — Software Developer</h1>
+        <p style="line-height:1.7;color:#A7B0C0">
+          This portfolio needs JavaScript to display. Emmanuel Acquah is a Computer Science graduate of Koforidua
+          Technical University, Ghana, working in software development with React and React Native, databases, and
+          Python-based machine learning, with research interests in cybersecurity.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

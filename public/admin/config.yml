@@ -1,0 +1,145 @@
+# -----------------------------------------------------------------------------
+# Sveltia CMS configuration
+#
+# This powers the editor at /admin. It commits straight to your GitHub repo,
+# which triggers a rebuild — so anything published here genuinely persists.
+#
+# BEFORE THIS WORKS, set `repo` below to your GitHub repository.
+# Full setup steps are in the README under "Uploading images from /admin".
+# -----------------------------------------------------------------------------
+
+backend:
+  name: github
+  # CHANGE THIS to your repo, in the form your-username/your-repo-name.
+  repo: your-username/my-portfolio-website
+  branch: main
+
+# Lets you run the CMS against your local checkout while developing, without
+# touching GitHub. See the README for how to start it.
+local_backend: true
+
+# Where uploaded files land by default. Collections below override this when
+# they need a different folder.
+media_folder: public/images/gallery
+public_folder: /images/gallery
+
+collections:
+  # ---------------------------------------------------------------------------
+  # Gallery — one JSON file per image, read by src/data/gallery.ts
+  # ---------------------------------------------------------------------------
+  - name: gallery
+    label: Gallery
+    label_singular: Gallery image
+    description: >-
+      Screenshots, certificates and photographs. Each entry becomes one tile in
+      the Gallery section. Only add images that are genuinely yours.
+    folder: content/gallery
+    extension: json
+    format: json
+    create: true
+    slug: '{{fields.title | slugify}}'
+    summary: '{{title}} — {{category}}'
+    sortable_fields: ['order', 'title', 'category']
+    fields:
+      - label: Image
+        name: src
+        widget: image
+        hint: Upload the file, or pick one you have already uploaded.
+
+      - label: Alt text
+        name: alt
+        widget: string
+        hint: >-
+          Describe what is in the picture. Someone using a screen reader gets
+          this sentence instead of the image.
+
+      - label: Title
+        name: title
+        widget: string
+        hint: Shown when hovering the tile, and under the enlarged image.
+
+      - label: Category
+        name: category
+        widget: select
+        default: projects
+        options:
+          - { label: Projects and Applications, value: projects }
+          - { label: Certificates and Achievements, value: certificates }
+          - { label: Technology and Events, value: events }
+          - { label: Professional Activities, value: professional }
+
+      - label: Caption
+        name: caption
+        widget: string
+        required: false
+        hint: Optional line under the enlarged image.
+
+      - label: Date
+        name: date
+        widget: string
+        required: false
+        hint: >-
+          Free text, e.g. 2026 or March 2026. Leave empty rather than guessing.
+
+      - label: Order
+        name: order
+        widget: number
+        required: false
+        default: 0
+        value_type: int
+        hint: Lower numbers appear first.
+
+      - label: Width (pixels)
+        name: width
+        widget: number
+        required: false
+        value_type: int
+        hint: >-
+          Optional. Supplying the real dimensions lets the browser reserve space
+          before the image loads.
+
+      - label: Height (pixels)
+        name: height
+        widget: number
+        required: false
+        value_type: int
+
+  # ---------------------------------------------------------------------------
+  # Profile photo — a single file, read by src/data/profile.ts
+  # ---------------------------------------------------------------------------
+  - name: profile
+    label: Profile
+    files:
+      - name: photo
+        label: Profile photo
+        file: content/settings/profile-photo.json
+        description: >-
+          The portrait in the hero section. Leave the image empty to show the
+          EA monogram panel instead.
+        media_folder: /public/images/profile
+        public_folder: /images/profile
+        fields:
+          - label: Photograph
+            name: src
+            widget: image
+            required: false
+            hint: A square or portrait crop works best. Leave empty for the monogram.
+
+          - label: Alt text
+            name: alt
+            widget: string
+            default: Emmanuel Acquah
+
+          - label: Crop position
+            name: position
+            widget: string
+            default: center 30%
+            hint: >-
+              CSS object-position. 'center 20%' pulls the crop higher,
+              'center 50%' centres it. Adjust if your head gets cut off.
+
+          - label: Caption
+            name: caption
+            widget: string
+            required: false
+            hint: Shown under the frame. Leave empty to hide it.
