@@ -73,7 +73,7 @@ export function ProjectMotif({
             [950, 62],
             [1090, 88],
           ].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 5 : 3} fill="var(--c-surface)" />
+            <circle key={`${x}-${y}`} cx={x} cy={y} r={i % 3 === 0 ? 5 : 3} fill="var(--c-surface)" />
           ))}
         </g>
       ) : variant === 'broadcast' ? (

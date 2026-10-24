@@ -19,7 +19,7 @@ export function About() {
         {/* Narrative */}
         <div className="space-y-5">
           {aboutParagraphs.map((paragraph, i) => (
-            <Reveal key={i} delay={i * 70}>
+            <Reveal key={paragraph} delay={i * 70}>
               <p className="text-base leading-[1.75] text-muted">{paragraph}</p>
             </Reveal>
           ))}
