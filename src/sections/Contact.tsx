@@ -1,5 +1,5 @@
 import { Check, Copy, FileText, Mail, MapPin } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from '../components/BrandIcons'
+import { GithubIcon, LinkedinIcon, XIcon } from '../components/BrandIcons'
 import { useEffect, useState } from 'react'
 import { ContactForm } from '../components/ContactForm'
 import { DevHint } from '../components/DevHint'
@@ -46,6 +46,7 @@ export function Contact() {
     contact.github.trim()
       ? { key: 'github', label: 'GitHub', value: 'See the code', href: contact.github, icon: GithubIcon }
       : null,
+    contact.x.trim() ? { key: 'x', label: 'X', value: 'Follow along', href: contact.x, icon: XIcon } : null,
   ].filter((item): item is NonNullable<typeof item> => item !== null)
 
   const missing = [
@@ -132,8 +133,9 @@ export function Contact() {
                 </ul>
               ) : (
                 <p className="mt-4 rounded-xl border border-dashed border-line-strong p-4 text-sm text-muted">
-                  Profile links appear here once added to{' '}
-                  <code className="font-mono text-xs">src/data/profile.ts</code>.
+                  Profile links appear here once added at{' '}
+                  <code className="font-mono text-xs">/admin</code> &rarr; Settings, or in{' '}
+                  <code className="font-mono text-xs">content/settings/contact.json</code>.
                 </p>
               )}
 

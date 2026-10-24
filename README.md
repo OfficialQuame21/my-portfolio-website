@@ -73,6 +73,10 @@ touch a component to add a project or update your education.
 | `gallery.ts`      | Gallery *types and categories*. The images themselves are JSON files in `content/gallery/` — see below |
 | `seo.ts`          | Page title, descriptions and the canonical domain              |
 
+Two things are *not* in `src/data/` because the CMS needs to write them:
+`content/settings/contact.json` (email + social links) and
+`content/settings/profile-photo.json` (the hero portrait).
+
 ### How "not configured yet" is handled
 
 Any link left as an empty string (`''`) is **hidden**, not rendered as a dead
@@ -289,15 +293,22 @@ All of this is in `src/data/profile.ts`.
 
 ### Contact and social links
 
-```ts
-export const contact = {
-  email: 'emmanuel.a@xolaceinc.com',  // confirm, or swap for a personal address
-  github: '',                          // '' hides the link entirely
-  linkedin: '',
-  x: '',
-  locationLine: 'Ghana',
+Edit at `/admin` → **Settings → Contact and social links**, or by hand in
+`content/settings/contact.json`:
+
+```json
+{
+  "email": "emmanuel.a@xolaceinc.com",
+  "github": "https://github.com/your-username",
+  "linkedin": "https://www.linkedin.com/in/your-handle",
+  "x": "https://x.com/your-handle",
+  "locationLine": "Koforidua, Ghana"
 }
 ```
+
+Paste the **full URL including `https://`** — a bare username will not work.
+Any link left as `""` is hidden everywhere (footer, Contact section) rather
+than rendered as a dead button, so there is never a broken link on the page.
 
 ### Feature switches
 
@@ -490,11 +501,13 @@ guesswork-filled — it is all either hidden or marked until you confirm it.
 
 ### Required
 
-- [ ] **Email** — confirm `contact.email` in `src/data/profile.ts`. It currently
+- [ ] **Email** — confirm `email` in `content/settings/contact.json`. It currently
       uses your Xolace address; a personal address may suit graduate and
       scholarship applications better.
-- [ ] **GitHub URL** — `contact.github`. Hidden until set.
-- [ ] **LinkedIn URL** — `contact.linkedin`. Hidden until set.
+- [ ] **GitHub URL** — `/admin` → Settings, or `content/settings/contact.json`.
+      Hidden until set. Use the full `https://…` URL.
+- [ ] **LinkedIn URL** — same place. Hidden until set.
+- [ ] **X / Twitter URL** — same place. Optional; hidden until set.
 - [ ] **Domain** — set `siteUrl` in `src/data/seo.ts`. That one
       value now drives the canonical URL, Open Graph tags, `robots.txt` and
       `sitemap.xml`.

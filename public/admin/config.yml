@@ -107,9 +107,48 @@ collections:
   # ---------------------------------------------------------------------------
   # Profile photo — a single file, read by src/data/profile.ts
   # ---------------------------------------------------------------------------
-  - name: profile
-    label: Profile
+  - name: settings
+    label: Settings
     files:
+      - name: contact
+        label: Contact and social links
+        file: content/settings/contact.json
+        description: >-
+          Your email and profile URLs. A link left empty is hidden across the
+          whole site rather than shown as a dead button.
+        fields:
+          - label: Email address
+            name: email
+            widget: string
+            hint: Shown in the Contact section and used by the "Email me" button.
+
+          - label: GitHub URL
+            name: github
+            widget: string
+            required: false
+            pattern: ['^$|^https?://', 'Must start with https:// (or be empty)']
+            hint: 'Full URL, e.g. https://github.com/your-username. Empty hides it.'
+
+          - label: LinkedIn URL
+            name: linkedin
+            widget: string
+            required: false
+            pattern: ['^$|^https?://', 'Must start with https:// (or be empty)']
+            hint: 'Full URL, e.g. https://www.linkedin.com/in/your-handle.'
+
+          - label: X (Twitter) URL
+            name: x
+            widget: string
+            required: false
+            pattern: ['^$|^https?://', 'Must start with https:// (or be empty)']
+            hint: 'Full URL, e.g. https://x.com/your-handle. Optional.'
+
+          - label: Location line
+            name: locationLine
+            widget: string
+            required: false
+            hint: Free text shown beside your email, e.g. Koforidua, Ghana.
+
       - name: photo
         label: Profile photo
         file: content/settings/profile-photo.json

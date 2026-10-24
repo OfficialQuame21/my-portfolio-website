@@ -1,6 +1,7 @@
 import { galleryItems } from './gallery'
 import { seo } from './seo'
 import photoData from '../../content/settings/profile-photo.json'
+import contactData from '../../content/settings/contact.json'
 
 /* ---------------------------------------------------------------------------
  * profile.ts — the one file to edit for identity, links and feature switches.
@@ -59,21 +60,35 @@ export const photo: Photo = {
 
 /* ---------------------------------------------------------------------------
  * Contact + social links
+ *
+ * Managed from the CMS at /admin (Settings → Contact and social links), which
+ * writes `content/settings/contact.json`. You can edit that file by hand too.
+ *
+ * A link left empty is HIDDEN rather than rendered dead — so an unset GitHub
+ * URL means no GitHub button anywhere, not a broken one. Paste the full URL,
+ * including https://.
  * ------------------------------------------------------------------------- */
 
-export const contact = {
-  /** CONFIRM THIS. Replace with a personal address if you prefer one for
-   *  scholarship and graduate applications. */
-  email: 'emmanuel.a@xolaceinc.com',
-  /** e.g. 'https://github.com/your-username' — leave empty to hide the link. */
-  github: '',
-  /** e.g. 'https://www.linkedin.com/in/your-handle' — leave empty to hide. */
-  linkedin: '',
-  /** Optional. e.g. 'https://x.com/your-handle' */
-  x: '',
-  /** Optional, free-text. e.g. 'Koforidua, Eastern Region, Ghana' */
-  locationLine: 'Ghana',
-} as const
+export type Contact = {
+  email: string
+  /** Full URL, e.g. 'https://github.com/your-username'. '' hides the link. */
+  github: string
+  /** Full URL, e.g. 'https://www.linkedin.com/in/your-handle'. */
+  linkedin: string
+  /** Full URL, e.g. 'https://x.com/your-handle'. */
+  x: string
+  /** Free text shown beside the email, e.g. 'Koforidua, Ghana'. */
+  locationLine: string
+}
+
+/** Trimmed on the way in, so a stray space never counts as "configured". */
+export const contact: Contact = {
+  email: (contactData.email ?? '').trim(),
+  github: (contactData.github ?? '').trim(),
+  linkedin: (contactData.linkedin ?? '').trim(),
+  x: (contactData.x ?? '').trim(),
+  locationLine: (contactData.locationLine ?? '').trim(),
+}
 
 /* ---------------------------------------------------------------------------
  * Feature switches — turn parts of the site on or off without touching JSX.
