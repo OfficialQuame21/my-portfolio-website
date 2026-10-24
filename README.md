@@ -70,7 +70,8 @@ touch a component to add a project or update your education.
 | `education.ts`    | Qualifications, CGPA, gated honours                           |
 | `research.ts`     | Research interests and intro                                  |
 | `achievements.ts` | Achievements — award/competition details, optional project block linking into `projects.ts`, each behind a `verified` flag |
-| `gallery.ts`      | Gallery images — filename, title, category, optional caption and date |
+| `gallery.ts`      | Gallery *types and categories*. The images themselves are JSON files in `content/gallery/` — see below |
+| `seo.ts`          | Page title, descriptions and the canonical domain              |
 
 ### How "not configured yet" is handled
 
@@ -130,15 +131,17 @@ A file at `public/images/profile/me.webp` is referenced as
 
 ### Your profile photo
 
-1. Save the photograph into `public/images/profile/`.
-2. Open `src/data/profile.ts` and set `photo.src`:
+Either upload it at `/admin` → **Profile → Profile photo**, or by hand:
 
-```ts
-export const photo = {
-  src: '/images/profile/emmanuel-acquah.webp',
-  alt: 'Emmanuel Acquah',
-  position: 'center 30%',   // nudge the crop if your face sits high or low
-  caption: 'Emmanuel Acquah · Koforidua, Ghana',
+1. Save the photograph into `public/images/profile/`.
+2. Set `src` in `content/settings/profile-photo.json`:
+
+```json
+{
+  "src": "/images/profile/emmanuel-acquah.webp",
+  "alt": "Emmanuel Acquah",
+  "position": "center 30%",
+  "caption": "Emmanuel Acquah · Koforidua, Ghana"
 }
 ```
 
@@ -155,6 +158,77 @@ presentable enough to ship if you would rather not use a photograph at all. In
 `npm run dev` an amber hint under the frame names the exact file to add; it
 renders nothing in a production build.
 
+## Uploading images from /admin
+
+The site ships with a content editor at **`/admin`**, powered by
+[Sveltia CMS](https://github.com/sveltia/sveltia-cms). You log in, drag an
+image in, fill in a title and category, and hit publish. Behind the scenes it
+commits the image and a small JSON file to your GitHub repo, which triggers a
+rebuild — so what you publish genuinely persists. There is no database and no
+upload server to run.
+
+It manages two things: **gallery images** and **your profile photo**. The rest
+of the site stays in `src/data/*.ts`, which is simpler to edit directly.
+
+### Why the gallery data moved
+
+A CMS can edit JSON and Markdown, not TypeScript. So each gallery image is now
+its own file in `content/gallery/`, and `src/data/gallery.ts` collects them at
+build time with `import.meta.glob`. You can still write those JSON files by
+hand — the CMS is a convenience, not a requirement.
+
+### Setting it up
+
+**1. Put the project on GitHub.** The repo is already initialised locally with
+one commit on `main`. Create an empty repository on github.com, then:
+
+```bash
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
+git push -u origin main
+```
+
+**2. Point the CMS at it.** In `public/admin/config.yml`, change:
+
+```yaml
+backend:
+  name: github
+  repo: your-username/my-portfolio-website   # ← your repo
+  branch: main
+```
+
+**3. Deploy** to Vercel or Netlify as described under [Deployment](#deployment).
+
+**4. Sign in** at `https://your-domain.com/admin`. Three options, easiest
+first:
+
+| Method | Setup needed | Good for |
+| ------ | ------------ | -------- |
+| **Access token** | None. Create a GitHub [fine-grained personal access token](https://github.com/settings/tokens) with read/write access to *Contents* on this one repo, then click *Sign In Using Access Token*. | Getting going today |
+| **Sveltia authenticator** | Deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) to a free Cloudflare Workers account, register a GitHub OAuth app, then add `base_url: https://your-worker-url` under `backend:` | A proper *Sign in with GitHub* button |
+| **Netlify** | If hosting on Netlify, register a GitHub OAuth app and link it in the Netlify dashboard. No config change needed. | Netlify users |
+
+The access-token route needs no extra infrastructure at all. You can move to
+OAuth later without changing anything else.
+
+### Editing without deploying
+
+You don't need GitHub to try it. Run `npm run dev`, open
+`http://localhost:5173/admin/`, and click **Work with Local Repository** —
+Sveltia asks for permission to this folder and edits the files on disk
+directly. Your changes show up in the running dev server immediately. (Chrome
+or Edge; the API this uses isn't in Safari or Firefox yet.)
+
+### A note on the pinned version
+
+`public/admin/index.html` loads Sveltia from a CDN at an **exact version**,
+not `latest`. The package is pre-1.0 and releases very often, and an admin
+screen that silently changes under you is worse than one you update
+deliberately. To update, bump the version in that file and check the page
+still loads.
+
+Sveltia is config-compatible with [Decap CMS](https://decapcms.org), so if you
+ever want to switch, it's a one-line change to the script tag.
+
 ### The gallery
 
 The Gallery section holds screenshots, certificates and photographs, grouped
@@ -167,23 +241,26 @@ into four categories:
 | `events`       | Events       | Competitions, tech events, presentations          |
 | `professional` | Professional | Training sessions and other professional activity |
 
-To add an image, save the file and add one entry to `src/data/gallery.ts`:
+The easy way is `/admin`. By hand: save the file into `public/images/...` and
+create one JSON file in `content/gallery/`, named however you like:
 
-```ts
-export const galleryItems: GalleryItem[] = [
-  {
-    id: 'src-week-training',
-    src: '/images/gallery/src-week-training.webp',
-    alt: 'Leading a Microsoft Office session for students at SRC Week',
-    title: 'Digital skills training',
-    category: 'events',
-    date: '2026',                                              // optional
-    caption: 'GNUT training program, Koforidua Technical University',  // optional
-    width: 1600,                                               // optional
-    height: 1200,
-  },
-]
+```json
+{
+  "src": "/images/gallery/src-week-training.webp",
+  "alt": "Leading a Microsoft Office session for students at SRC Week",
+  "title": "Digital skills training",
+  "category": "events",
+  "date": "2026",
+  "caption": "GNUT training program, Koforidua Technical University",
+  "order": 1,
+  "width": 1600,
+  "height": 1200
+}
 ```
+
+`src`, `alt`, `title` and `category` are required; the rest are optional. An
+entry missing an image or carrying an unknown category is skipped rather than
+rendered broken, so a half-finished draft can't break the grid.
 
 Nothing else needs changing:
 
@@ -296,13 +373,17 @@ wrong background.
 
 ```
 public/            favicon.svg · og-image.png · 404.html
+  admin/           the CMS editor (index.html + config.yml)
                    (robots.txt and sitemap.xml are generated at build time)
   images/          profile/ · projects/ · certificates/ · gallery/
                    — drop your files here; see images/README.md
 scripts/
   og-image.html    source for the social preview image (see below)
+content/           CMS-editable content (JSON)
+  settings/        profile-photo.json
+  gallery/         one file per gallery image
 vite-plugins/
-  site-metadata.ts substitutes profile.seo into index.html; emits robots/sitemap
+  site-metadata.ts substitutes seo.ts into index.html; emits robots/sitemap
 src/
   components/      Navbar · Footer · Button · Section · SectionHeading · Chip
                    ProjectCard · ProjectMotif · Timeline · SkillGroupCard
@@ -314,6 +395,7 @@ src/
   data/            all editable content (see table above)
   hooks/           useTheme · useActiveSection · useScrolled
   lib/utils.ts     cx() · scrollToSection() · prefersReducedMotion()
+  data/seo.ts      page metadata — the only place the domain is written
   index.css        design tokens, base layer, utilities, motion
 ```
 
@@ -337,7 +419,7 @@ src/
 - The favicon is an inline SVG EA monogram at `public/favicon.svg`.
 
 **`https://example.com` is a placeholder — change it in one place.** Set
-`profile.seo.siteUrl` in `src/data/profile.ts`. A small build plugin
+`siteUrl` in `src/data/seo.ts`. A small build plugin
 (`vite-plugins/site-metadata.ts`) substitutes the title, descriptions and
 canonical URL into `index.html` and generates `robots.txt` and `sitemap.xml`
 from it, so those three files cannot drift apart.
@@ -395,7 +477,7 @@ dashboard if you are using the contact form. `.env*` files are git-ignored.
 
 ### After deploying
 
-1. Replace `https://example.com` everywhere listed under [SEO](#seo-and-social-sharing).
+1. Set `siteUrl` in `src/data/seo.ts` to your real domain.
 2. Redeploy.
 3. Check the preview card with the LinkedIn Post Inspector and `opengraph.xyz`.
 
@@ -413,7 +495,7 @@ guesswork-filled — it is all either hidden or marked until you confirm it.
       scholarship applications better.
 - [ ] **GitHub URL** — `contact.github`. Hidden until set.
 - [ ] **LinkedIn URL** — `contact.linkedin`. Hidden until set.
-- [ ] **Domain** — set `profile.seo.siteUrl` in `src/data/profile.ts`. That one
+- [ ] **Domain** — set `siteUrl` in `src/data/seo.ts`. That one
       value now drives the canonical URL, Open Graph tags, `robots.txt` and
       `sitemap.xml`.
 
@@ -462,11 +544,13 @@ guesswork-filled — it is all either hidden or marked until you confirm it.
 
 ### Optional
 
-- [ ] **Profile photograph** — save to `public/images/profile/` and set
-      `photo.src` in `src/data/profile.ts`. A monogram panel shows until then.
-- [ ] **Gallery images** — add screenshots, certificates and event photos to
-      `public/images/` and list them in `src/data/gallery.ts`. The section and
-      its nav link stay hidden in production while the list is empty.
+- [ ] **Push to GitHub** — the repo is initialised with one commit on `main`;
+      it needs a remote before `/admin` can save anything.
+- [ ] **Set `repo:` in `public/admin/config.yml`** to your GitHub repository.
+- [ ] **Profile photograph** — upload at `/admin`, or set `src` in
+      `content/settings/profile-photo.json`. A monogram panel shows until then.
+- [ ] **Gallery images** — add via `/admin`, or by hand into `content/gallery/`.
+      The section and its nav link stay hidden in production while empty.
 - [ ] **Résumé PDF** — add the file and set `features.resume.enabled`.
 - [ ] **Project screenshots** — drop images in `public/projects/` and set
       `image` on a project to replace its abstract motif in the card header.
