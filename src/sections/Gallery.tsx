@@ -10,6 +10,15 @@ import { cx } from '../lib/utils'
 
 type Filter = 'all' | GalleryCategoryId
 
+/**
+ * Noticeably taller than the 4:3 tile — phone screenshots, portrait scans.
+ * Without known dimensions we assume a normal photo and crop to fill.
+ */
+function isTall(item: { width?: number; height?: number }) {
+  if (!item.width || !item.height) return false
+  return item.width / item.height < 0.75
+}
+
 export function Gallery() {
   const [filter, setFilter] = useState<Filter>('all')
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -91,7 +100,10 @@ export function Gallery() {
                     onClick={() => setOpenIndex(i)}
                     className="group surface-card relative block w-full overflow-hidden p-0 text-left transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-lift"
                   >
-                    {/* Fixed ratio box: the grid never reflows as images load. */}
+                    {/* Fixed ratio box: the grid never reflows as images load.
+                        A phone screenshot is far taller than the 4:3 tile, so
+                        cropping it would show a slice of the middle and nothing
+                        else — those are fitted whole instead. */}
                     <span className="block aspect-[4/3] overflow-hidden bg-surface-2/60">
                       <img
                         src={item.src}
@@ -100,7 +112,10 @@ export function Gallery() {
                         height={item.height}
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className={cx(
+                          'h-full w-full transition-transform duration-500 group-hover:scale-105',
+                          isTall(item) ? 'object-contain' : 'object-cover',
+                        )}
                       />
                     </span>
 

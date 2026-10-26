@@ -78,7 +78,27 @@ export const galleryItems: GalleryItem[] = Object.entries(files)
   })
   // An entry with no image or an unknown category is skipped rather than
   // rendered broken — a half-filled CMS draft must not break the grid.
-  .filter(({ raw }) => Boolean(raw.src?.trim()) && validCategories.has(String(raw.category)))
+  .filter(({ id, raw }) => {
+    const src = raw.src?.trim()
+    if (!src) return false
+
+    // `public/` is the folder on disk, not part of the served URL. Writing
+    // 'public/images/x.jpg' instead of '/images/x.jpg' is the easiest mistake
+    // to make here and produces a silently broken image, so say so loudly.
+    if (src.startsWith('public/') || src.startsWith('/public/')) {
+      console.error(
+        `[gallery] "${id}" has src "${src}". Drop the "public/" prefix — use "${src.replace(/^\/?public/, '')}".`,
+      )
+      return false
+    }
+
+    if (!validCategories.has(String(raw.category))) {
+      console.error(`[gallery] "${id}" has unknown category "${raw.category}" — entry skipped.`)
+      return false
+    }
+
+    return true
+  })
   .map(({ id, raw }) => ({
     id,
     src: raw.src as string,
