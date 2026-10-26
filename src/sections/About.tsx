@@ -40,7 +40,7 @@ export function About() {
                       <Icon size={19} />
                     </span>
                     <div className="min-w-0">
-                      <h3 className="text-base font-semibold">{item.title}</h3>
+                      <h3 className="text-lg font-semibold">{item.title}</h3>
                       <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.body}</p>
                     </div>
                   </article>

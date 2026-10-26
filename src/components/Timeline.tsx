@@ -88,7 +88,7 @@ export function Timeline({ items }: { items: TimelineItem[] }) {
                 ) : null}
               </div>
 
-              <h3 className="mt-2.5 text-lg leading-snug font-semibold text-balance">{item.title}</h3>
+              <h3 className="mt-2.5 text-xl leading-snug font-semibold text-balance">{item.title}</h3>
               <p className="mt-1 max-w-[78ch] text-sm text-muted">{item.subtitle}</p>
               {item.context ? <p className="mt-0.5 max-w-[78ch] text-sm text-faint">{item.context}</p> : null}
 

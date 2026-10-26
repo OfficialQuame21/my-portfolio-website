@@ -106,7 +106,7 @@ export function Gallery() {
 
                     {/* Hover scrim with the title */}
                     <span className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-canvas via-canvas/40 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                      <span className="flex items-center gap-1.5 text-xs font-medium text-ink">
+                      <span className="flex items-center gap-1.5 text-sm font-medium text-ink">
                         <Expand size={12} aria-hidden="true" />
                         {item.title}
                       </span>

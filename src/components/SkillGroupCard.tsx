@@ -29,7 +29,7 @@ export function SkillGroupCard({ group }: { group: SkillGroup }) {
           <Icon size={18} />
         </span>
         <div className="min-w-0">
-          <h3 className="text-base leading-snug font-semibold">{group.title}</h3>
+          <h3 className="text-lg leading-snug font-semibold">{group.title}</h3>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">{group.blurb}</p>
         </div>
       </div>

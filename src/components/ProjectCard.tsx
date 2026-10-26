@@ -76,7 +76,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         )}
 
         <div className="absolute top-4 left-5 flex flex-wrap items-center gap-2">
-          <Chip tone={tone}>{project.category}</Chip>
+          <Chip tone={tone} size="md">
+            {project.category}
+          </Chip>
           {project.period ? <Chip>{project.period}</Chip> : null}
           {project.award ? (
             <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/35 bg-amber-400/12 px-2.5 py-1 text-xs leading-none font-semibold text-amber-300 backdrop-blur-sm light:text-amber-700">
@@ -95,7 +97,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       </div>
 
       <div className="p-5 sm:p-7">
-        <h3 className="text-xl leading-snug font-semibold text-balance sm:text-[1.4rem]">{project.title}</h3>
+        <h3 className="text-[1.35rem] leading-snug font-semibold text-balance sm:text-[1.55rem]">{project.title}</h3>
 
         {project.context ? <p className="mt-1.5 text-sm text-faint">{project.context}</p> : null}
 

@@ -36,7 +36,7 @@ export function Education() {
                       {entry.period}
                     </p>
 
-                    <h3 className="mt-2.5 text-xl leading-snug font-semibold text-balance">{entry.qualification}</h3>
+                    <h3 className="mt-2.5 text-[1.35rem] leading-snug font-semibold text-balance sm:text-[1.55rem]">{entry.qualification}</h3>
 
                     <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted">
                       <span>{entry.institution}</span>

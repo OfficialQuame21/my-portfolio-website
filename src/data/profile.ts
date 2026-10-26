@@ -77,6 +77,8 @@ export type Contact = {
   linkedin: string
   /** Full URL, e.g. 'https://x.com/your-handle'. */
   x: string
+  /** Full URL, e.g. 'https://www.reddit.com/user/your-handle'. */
+  reddit: string
   /** Free text shown beside the email, e.g. 'Koforidua, Ghana'. */
   locationLine: string
 }
@@ -86,7 +88,8 @@ export const contact: Contact = {
   email: (contactData.email ?? '').trim(),
   github: (contactData.github ?? '').trim(),
   linkedin: (contactData.linkedin ?? '').trim(),
-  x: (contactData.x ?? '').trim(),
+  x: ('x' in contactData ? (contactData.x as string) : '').trim(),
+  reddit: ('reddit' in contactData ? (contactData.reddit as string) : '').trim(),
   locationLine: (contactData.locationLine ?? '').trim(),
 }
 

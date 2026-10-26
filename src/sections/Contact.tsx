@@ -1,5 +1,5 @@
 import { Check, Copy, FileText, Mail, MapPin } from 'lucide-react'
-import { GithubIcon, LinkedinIcon, XIcon } from '../components/BrandIcons'
+import { GithubIcon, LinkedinIcon, RedditIcon, XIcon } from '../components/BrandIcons'
 import { useEffect, useState } from 'react'
 import { ContactForm } from '../components/ContactForm'
 import { DevHint } from '../components/DevHint'
@@ -47,6 +47,9 @@ export function Contact() {
       ? { key: 'github', label: 'GitHub', value: 'See the code', href: contact.github, icon: GithubIcon }
       : null,
     contact.x.trim() ? { key: 'x', label: 'X', value: 'Follow along', href: contact.x, icon: XIcon } : null,
+    contact.reddit.trim()
+      ? { key: 'reddit', label: 'Reddit', value: 'Join the conversation', href: contact.reddit, icon: RedditIcon }
+      : null,
   ].filter((item): item is NonNullable<typeof item> => item !== null)
 
   const missing = [

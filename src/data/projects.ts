@@ -112,7 +112,7 @@ export const projects: Project[] = [
       'Scoped to urban areas in Ghana, including Accra, Kumasi, Cape Coast and Koforidua.',
     ],
     links: [
-      { kind: 'github', label: 'Source code', href: '' },
+      { kind: 'github', label: 'Source code', href: 'https://github.com/OfficialQuame21' },
       { kind: 'demo', label: 'Live demo', href: '' },
     ],
   },
@@ -136,8 +136,8 @@ export const projects: Project[] = [
     notes: ['Features listed under "In development" are planned or partially built — not publicly available.'],
     links: [
       { kind: 'github', label: 'Source code', href: '' },
+      { kind: 'appstore', label: 'App Store', href: 'https://apps.apple.com/gh/app/ktu-src/id6759487105' },
       { kind: 'playstore', label: 'Google Play', href: '' },
-      { kind: 'appstore', label: 'App Store', href: '' },
     ],
   },
   {
@@ -162,6 +162,8 @@ export const projects: Project[] = [
       'Xolace is a wellness product. It is not a clinical service and is not a substitute for professional mental healthcare.',
     ],
     links: [
+      { kind: 'appstore', label: 'App Store', href: 'https://apps.apple.com/gh/app/xolace-ai-mood-feelings/id6761601429' },
+      { kind: 'playstore', label: 'Google Play', href: '' },
       { kind: 'site', label: 'Visit Xolace', href: '' },
       { kind: 'github', label: 'Source code', href: '' },
     ],

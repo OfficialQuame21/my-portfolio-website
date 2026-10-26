@@ -36,7 +36,7 @@ export function Research() {
                 <p className="font-mono text-[0.68rem] tracking-[0.18em] text-faint uppercase">
                   Academic project experience
                 </p>
-                <h3 className="mt-2.5 text-base leading-snug font-semibold text-balance">{evidence.title}</h3>
+                <h3 className="mt-2.5 text-lg leading-snug font-semibold text-balance">{evidence.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{researchProjectNote}</p>
                 <button
                   type="button"
@@ -76,7 +76,7 @@ export function Research() {
                         <Icon size={18} />
                       </span>
                       <div className="min-w-0">
-                        <h3 className="text-base font-semibold">{interest.title}</h3>
+                        <h3 className="text-lg font-semibold">{interest.title}</h3>
                         <p className="mt-1.5 text-sm leading-relaxed text-muted">{interest.body}</p>
                       </div>
                     </article>

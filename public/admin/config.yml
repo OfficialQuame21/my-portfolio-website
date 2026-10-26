@@ -143,6 +143,13 @@ collections:
             pattern: ['^$|^https?://', 'Must start with https:// (or be empty)']
             hint: 'Full URL, e.g. https://x.com/your-handle. Optional.'
 
+          - label: Reddit URL
+            name: reddit
+            widget: string
+            required: false
+            pattern: ['^$|^https?://', 'Must start with https:// (or be empty)']
+            hint: 'Full URL, e.g. https://www.reddit.com/user/your-handle. Optional.'
+
           - label: Location line
             name: locationLine
             widget: string

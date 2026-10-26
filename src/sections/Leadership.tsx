@@ -29,7 +29,7 @@ export function Leadership() {
                   {role.year}
                 </span>
 
-                <h3 className="mt-3 text-lg leading-snug font-semibold text-balance">{role.role}</h3>
+                <h3 className="mt-3 text-xl leading-snug font-semibold text-balance">{role.role}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{role.organization}</p>
 
                 {role.note ? <p className="mt-4 border-t border-line pt-4 text-sm text-faint">{role.note}</p> : null}

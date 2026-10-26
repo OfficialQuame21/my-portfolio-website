@@ -86,7 +86,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
           </span>
 
           <div className="min-w-0">
-            <h3 className="text-lg leading-snug font-semibold text-balance">{item.title}</h3>
+            <h3 className="text-xl leading-snug font-semibold text-balance">{item.title}</h3>
             <p className="mt-1.5 text-sm text-muted">{item.organization}</p>
             {item.context ? <p className="mt-0.5 text-sm text-faint">{item.context}</p> : null}
           </div>
@@ -98,7 +98,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
         {item.project ? (
           <div className="mt-6 rounded-xl border border-line bg-canvas/40 p-4 sm:p-5">
             <p className="font-mono text-[0.68rem] tracking-[0.18em] text-faint uppercase">The project</p>
-            <h4 className="mt-2 text-base leading-snug font-semibold text-balance">{item.project.name}</h4>
+            <h4 className="mt-2 text-lg leading-snug font-semibold text-balance">{item.project.name}</h4>
 
             {/* The full write-up lives in the Projects section — link to it
                 rather than repeating the same paragraph here. */}

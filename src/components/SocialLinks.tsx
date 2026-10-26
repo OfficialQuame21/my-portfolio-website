@@ -1,6 +1,6 @@
 import { Mail } from 'lucide-react'
 import type { ComponentType, SVGProps } from 'react'
-import { GithubIcon, LinkedinIcon, XIcon } from './BrandIcons'
+import { GithubIcon, LinkedinIcon, RedditIcon, XIcon } from './BrandIcons'
 import { contact } from '../data/profile'
 import { cx } from '../lib/utils'
 
@@ -23,6 +23,9 @@ function configuredSocials(): SocialEntry[] {
   }
   if (contact.x.trim()) {
     entries.push({ key: 'x', label: 'X', href: contact.x, icon: XIcon, external: true })
+  }
+  if (contact.reddit.trim()) {
+    entries.push({ key: 'reddit', label: 'Reddit', href: contact.reddit, icon: RedditIcon, external: true })
   }
 
   return entries

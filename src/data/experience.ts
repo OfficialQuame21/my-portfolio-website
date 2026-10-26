@@ -34,7 +34,7 @@ export const experiences: Experience[] = [
     id: 'src-tech-chair',
     role: 'Technology and Innovation Committee Chair',
     organization: "Students' Representative Council, Koforidua Technical University",
-    period: '2026',
+    period: 'January 2026 - October 2026',
     type: 'leadership',
     engagement: 'student-leadership',
     current: true,
@@ -46,7 +46,7 @@ export const experiences: Experience[] = [
     role: 'Co-Founder and Chief Operating Officer',
     organization: 'Xolace',
     // CONFIRM: add the real start date, e.g. '2025 – Present'.
-    period: '',
+    period: '2023 - Present',
     type: 'product',
     engagement: 'founding',
     current: true,
@@ -87,7 +87,7 @@ export const experiences: Experience[] = [
     organization: 'Ghana National Union of Technical Students (GNUT)',
     context: 'SRC Week celebration, Koforidua Technical University',
     // CONFIRM: add the dates once you have them — no date is shown while this is empty.
-    period: '',
+    period: 'June 2026 – Late July 2026',
     type: 'tutoring',
     engagement: 'volunteer',
     description:
