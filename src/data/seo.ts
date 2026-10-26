@@ -19,7 +19,7 @@ export const seo = {
   socialDescription:
     'Computer Science graduate from Ghana building web and mobile applications, working with data, and pursuing research in cybersecurity.',
   /** Set this once you know the final domain — no trailing slash. */
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://emmaacquah-port.netlify.app',
   /** Path under public/ to the social preview image. */
   ogImage: '/og-image.png',
 } as const
