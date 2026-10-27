@@ -10,8 +10,9 @@
 
 backend:
   name: github
-  # CHANGE THIS to your repo, in the form your-username/your-repo-name.
-  repo: your-username/my-portfolio-website
+  # If you name the GitHub repo something other than my-portfolio-website,
+  # change the second half to match.
+  repo: OfficialQuame21/my-portfolio-website
   branch: main
 
 # Lets you run the CMS against your local checkout while developing, without
